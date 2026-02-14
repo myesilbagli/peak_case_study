@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q2 – 7×7 Combo | Peak Product Case</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a20;
+      --border: #2a2a32;
+      --text: #e8e8ec;
+      --muted: #8888a0;
+      --accent: #7c5cff;
+      --accent-dim: #5a42c2;
+      --success: #4ade80;
+      --highlight: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 0.75rem 0;
+    }
+    p {
+      margin: 0 0 0.75rem 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    p:last-child { margin-bottom: 0; }
+    .board-wrap {
+      margin-top: 0.5rem;
+    }
+    .board {
+      display: inline-grid;
+      grid-template-columns: repeat(9, 2.25rem);
+      grid-template-rows: repeat(9, 2.25rem);
+      gap: 3px;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cell {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      user-select: none;
+    }
+    .cell:hover {
+      background: #3a3a45;
+      color: var(--text);
+    }
+    .cell.combo {
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px rgba(124, 92, 255, 0.5);
+    }
+    .cell.combo:hover {
+      background: var(--accent-dim);
+    }
+    .cell.affected {
+      background: var(--accent-dim);
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .cell.affected:hover {
+      background: #6b52d4;
+    }
+    .cell.combo.affected { background: var(--accent); }
+    .tiles-count {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .tiles-count .num {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--highlight);
+    }
+    .tiles-count .hint {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .expected-note {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Q2 – 7×7 Combo on 9×9 Board</h1>
+    <p class="subtitle">Peak Product Case · Click any tile to see the blast</p>
+
+    <div class="card">
+      <h2>Interactive board</h2>
+      <p>
+        The combo affects a <strong>7×7</strong> area centered on the chosen tile. Click any tile below — that tile is the combo center. The board will show which tiles explode (purple) and how many are cleared. Near the borders, fewer than 49 tiles explode.
+      </p>
+      <div class="board-wrap">
+        <div class="board" id="board"></div>
+        <p class="tiles-count" id="tilesCount">Click a tile to see how many tiles explode.</p>
+        <p class="expected-note" id="expectedNote"></p>
+      </div>
+    </div>
+
+    <div class="footer">
+      7×7 blast (center ±3 in each direction), clipped to the 9×9 board. Share this file or host it to include in your project.
+    </div>
+  </div>
+
+  <script>
+    const N = 9;
+    const RADIUS = 3;  // 7×7 = center ± 3
+
+    /** Number of tiles in 7×7 blast centered at (r, c), clipped to board */
+    function cellsAffected7x7(r, c) {
+      const rLo = Math.max(0, r - RADIUS), rHi = Math.min(N - 1, r + RADIUS);
+      const cLo = Math.max(0, c - RADIUS), cHi = Math.min(N - 1, c + RADIUS);
+      return (rHi - rLo + 1) * (cHi - cLo + 1);
+    }
+
+    /** Set of linear indices for cells in 7×7 blast at (comboR, comboC) */
+    function getAffectedSet(comboR, comboC) {
+      const set = new Set();
+      const rLo = Math.max(0, comboR - RADIUS), rHi = Math.min(N - 1, comboR + RADIUS);
+      const cLo = Math.max(0, comboC - RADIUS), cHi = Math.min(N - 1, comboC + RADIUS);
+      for (let i = rLo; i <= rHi; i++)
+        for (let j = cLo; j <= cHi; j++)
+          set.add(i * N + j);
+      return set;
+    }
+
+    /** Expected number of tiles cleared if combo is uniformly random over 81 cells */
+    function exactExpected7x7() {
+      let total = 0;
+      for (let i = 0; i < N; i++)
+        for (let j = 0; j < N; j++)
+          total += cellsAffected7x7(i, j);
+      return total / (N * N);
+    }
+
+    function renderBoard(selectedR, selectedC) {
+      const board = document.getElementById('board');
+      const hasSelection = selectedR !== null && selectedC !== null;
+      const affected = hasSelection ? getAffectedSet(selectedR, selectedC) : new Set();
+      const count = hasSelection ? cellsAffected7x7(selectedR, selectedC) : 0;
+
+      board.innerHTML = '';
+      for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          const idx = i * N + j;
+          if (hasSelection && i === selectedR && j === selectedC) cell.classList.add('combo');
+          if (hasSelection && affected.has(idx)) cell.classList.add('affected');
+          cell.textContent = '';
+          cell.title = `Row ${i}, Col ${j}. Click to set as combo center.`;
+          board.appendChild(cell);
+        }
+      }
+
+      const countEl = document.getElementById('tilesCount');
+      if (hasSelection) {
+        countEl.innerHTML = `<span class="num">${count}</span> tile${count !== 1 ? 's' : ''} will explode <span class="hint">(combo at row ${selectedR}, col ${selectedC})</span>`;
+      } else {
+        countEl.textContent = 'Click a tile to see how many tiles explode.';
+      }
+
+      document.getElementById('expectedNote').textContent =
+        'Expected tiles cleared (if combo is random): ' + exactExpected7x7().toFixed(2) + ' per combo.';
+    }
+
+    document.getElementById('board').addEventListener('click', function (e) {
+      const cell = e.target.closest('.cell');
+      if (!cell) return;
+      const r = parseInt(cell.dataset.row, 10);
+      const c = parseInt(cell.dataset.col, 10);
+      renderBoard(r, c);
+    });
+
+    // Initial: no selection, then show expected
+    renderBoard(null, null);
+  </script>
+</body>
+</html>

@@ -1,27 +1,13 @@
-# Q2 Bomb&Bomb simulation – web version
+# Peak case – web version (Q2 & Q4)
 
 ## Open locally
 
-1. Double-click **`q2_simulation.html`** in Finder, or  
-2. From terminal:  
-   `open q2_simulation.html`  
-   (or drag the file into a browser window).
+Open **`index.html`** in your browser (double-click, or drag into a browser window). No server needed.
 
-No server or install needed. Everything runs in your browser.
+The page has two tabs at the top: **Q2 – 7×7 Combo** (interactive board) and **Q4 – A/B Metrics** (charts and parts A–D).
 
-## Share in your project
+## Share / publish
 
-**Option A – Send the file**  
-Email or upload `q2_simulation.html`. Recipients open it in any browser (Chrome, Safari, Firefox, etc.).
+Use **one link** to the folder (e.g. `https://username.github.io/peak_case_study/`). See **GITHUB_PUBLISH.md** for steps.
 
-**Option B – Host online (free)**  
-1. Put `q2_simulation.html` in a GitHub repo.  
-2. Enable **GitHub Pages**: repo → Settings → Pages → Source: main branch, `/ (root)` or `/docs` (if you put the file in `docs/`).  
-3. Share the link: `https://<your-username>.github.io/<repo-name>/q2_simulation.html`
-
-**Option C – Netlify / Vercel**  
-Drag the folder (or repo) onto [Netlify Drop](https://app.netlify.com/drop) or deploy with Vercel. You get a public URL.
-
----
-
-The page runs the same logic as `q2_bomb_combo.py`: exact expected cells (5×5 and 3×9) plus a Monte Carlo simulation with configurable trials.
+Same logic as `q2_bomb_combo.py` (Q2) and `q4_ab_metrics.py` (Q4).

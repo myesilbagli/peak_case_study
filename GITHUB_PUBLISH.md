@@ -23,16 +23,12 @@ You want the **contents** of your `scripts` folder to be at the **root** of the 
 
 1. On the new repo page, click **“uploading an existing file”** (or **Add file** → **Upload files**).
 2. Open your `scripts` folder in Finder.
-3. Drag **all** of these into the upload area:
-   - `index.html`
-   - `q2_simulation.html`
-   - `q4_visualization.html`
-   - (Optional: `HOW_TO_PUBLISH.md`, `README_Q2_Web.md`, etc. — they won’t affect the links.)
+3. Drag **all** files from your scripts folder (at least `index.html`, which has both Q2 and Q4; plus any .md, .py, .pdf you want).
 4. Scroll down, add a commit message like **“Add Peak case pages”**, click **Commit changes**.
 
 **Option B – Push from your computer (if you use Git)**
 
-Run this in Terminal from your **scripts** folder (the folder that contains `index.html` and `q2_simulation.html`):
+Run this in Terminal from your **scripts** folder (the folder that contains `index.html`):
 
 ```bash
 cd /Users/myesilbagli/Desktop/jobjob/peak/scripts
@@ -59,23 +55,16 @@ Replace **YOUR-USERNAME** with your GitHub username and **peak-case** with your 
 
 ---
 
-## Step 4: Get your links
+## Step 4: Get your link
 
 Wait **1–2 minutes**, then open (replace `YOUR-USERNAME` and `peak-case` with yours):
 
-| What              | URL |
-|-------------------|-----|
-| **Landing page**  | `https://YOUR-USERNAME.github.io/peak-case/` |
-| **Q2 – Combo**    | `https://YOUR-USERNAME.github.io/peak-case/q2_simulation.html` |
-| **Q4 – A/B**      | `https://YOUR-USERNAME.github.io/peak-case/q4_visualization.html` |
+**`https://YOUR-USERNAME.github.io/peak-case/`**
 
-Test in an **incognito window** or on your phone. If the page loads, you’re done.
+That single page has tabs for **Q2 (7×7 Combo)** and **Q4 (A/B Metrics)**. Test in an incognito window or on your phone.
 
 ---
 
 ## Use in PowerPoint or PDF
 
-- **One link:** Use the landing page URL. When someone clicks it they see “Q2” and “Q4” and choose one.
-- **Two links:** Add the Q2 and Q4 URLs as separate links (e.g. “Interactive Q2”, “Interactive Q4”).
-
-These links work from any device and network as long as the viewer has internet.
+Use the link above. When someone opens it they see the Peak case page with Q2 and Q4 tabs at the top. Works on any device with internet.

@@ -6,14 +6,14 @@ If you put a link in PowerPoint or PDF, it must point to a **URL on the internet
 
 ## Option 1: GitHub Pages (good for portfolios, stable URL)
 
-**Result:** A link like `https://YOUR-USERNAME.github.io/peak-case/q2_simulation.html` that works from anywhere.
+**Result:** A link like `https://YOUR-USERNAME.github.io/peak-case/` that works from anywhere (one page with Q2 and Q4 tabs).
 
 1. **Create a GitHub account** if you don’t have one: [github.com](https://github.com).
 
 2. **Create a new repository** (e.g. `peak-case`). Don’t add a README yet if you want to push your existing folder.
 
 3. **Put your files in the repo.** Two ways:
-   - **A) Upload in the browser:** In the repo, click “Add file” → “Upload files”. Drag in everything from your `scripts` folder (at least `q2_simulation.html`, `q4_visualization.html`, and any other files you want online).
+   - **A) Upload in the browser:** In the repo, click “Add file” → “Upload files”. Drag in everything from your `scripts` folder (at least `index.html`, which contains both Q2 and Q4).
    - **B) Use Git:** From your project folder:
      ```bash
      git init
@@ -30,11 +30,9 @@ If you put a link in PowerPoint or PDF, it must point to a **URL on the internet
    Under “Source” choose **Deploy from a branch**.  
    Branch: **main**, folder: **/ (root)**. Save.
 
-5. **Wait 1–2 minutes**, then open:
-   - `https://YOUR-USERNAME.github.io/peak-case/q2_simulation.html`
-   - `https://YOUR-USERNAME.github.io/peak-case/q4_visualization.html`
+5. **Wait 1–2 minutes**, then open: `https://YOUR-USERNAME.github.io/peak-case/`
 
-Use these two links in your PowerPoint or PDF. They work on any device with internet.
+Use this link in your PowerPoint or PDF. The page has Q2 and Q4 tabs. Works on any device with internet.
 
 ---
 
@@ -43,13 +41,9 @@ Use these two links in your PowerPoint or PDF. They work on any device with inte
 **Result:** A link like `https://something-random-123.netlify.app/` that serves your whole folder.
 
 1. Go to [app.netlify.com/drop](https://app.netlify.com/drop).
-2. Drag your **entire `scripts` folder** (the one that contains `q2_simulation.html` and `q4_visualization.html`) into the drop zone.
+2. Drag your **entire `scripts` folder** (the one that contains `index.html`) into the drop zone.
 3. Netlify will give you a URL, e.g. `https://random-name-123.netlify.app`.
-4. Your links will be:
-   - `https://random-name-123.netlify.app/q2_simulation.html`
-   - `https://random-name-123.netlify.app/q4_visualization.html`
-
-Put these in your PDF or PowerPoint. They work from any environment as long as the viewer has internet.
+4. Use that URL in your PDF or PowerPoint — the page has Q2 and Q4 tabs. They work from any environment as long as the viewer has internet.
 
 **Note:** Free “drop” sites can be taken down if unused. For something you want to keep for a long time (e.g. portfolio), use GitHub Pages (Option 1).
 
@@ -63,9 +57,4 @@ Put these in your PDF or PowerPoint. They work from any environment as long as t
 
 ---
 
-## One link or two?
-
-- **One link:** Create a simple `index.html` that has two buttons or links: “Q2 – Bomb combo” and “Q4 – A/B metrics”. You host that one page and give a single link; from there people can open Q2 and Q4.
-- **Two links:** Use the direct links to `q2_simulation.html` and `q4_visualization.html` in your slide or PDF (e.g. “Interactive Q2” and “Interactive Q4”).
-
-Either way, once the files are hosted (GitHub Pages or Netlify), the link will work when clicked from any environment.
+One link is enough: `index.html` has Q2 and Q4 as tabs at the top. Once the folder is hosted (GitHub Pages or Netlify), the link works from any environment.

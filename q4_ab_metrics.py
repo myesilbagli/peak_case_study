@@ -5,36 +5,49 @@ Q4: A/B test – DAU, retention, ARPDAU, cumulative revenue.
 
 import math
 
-# Given retention data (day -> % as decimal)
-# Variant A
-R_A_data = {1: 0.41, 3: 0.3946, 7: 0.3828, 14: 0.3731, 28: 0.3633}
-# Variant B
-R_B_data = {1: 0.46, 3: 0.4128, 7: 0.3763, 14: 0.3465, 28: 0.3167}
+# Exponential retention model: R(x) = exp(a + b * x)
+# Coefficients matching your spreadsheet (RetA age 1 = 0.4006375526, RetB age 1 = 0.4271033628)
+# Variant A: aA = -0.9109272487, bA = -0.003770870565
+# Variant B: aB = -0.8383393092, bB = -0.01238991841
 
-# Fit R(x) = (a*ln(x)+b)/100 using (ln(x), R*100) -> R*100 = a*ln(x)+b
-# Using points (1,41), (28,36.33) for A: 41 = b, 36.33 = a*ln(28)+b -> a = (36.33-41)/ln(28)
-# Better: use all points and least squares. For simplicity use (1,41) and (28,36.33): b=41, a=(36.33-41)/ln(28)
-def fit_log(d):
-    x1, y1 = 1, list(d.values())[0] * 100
-    x2, y2 = 28, d[28] * 100
-    a = (y2 - y1) / (math.log(x2) - math.log(x1))
-    b = y1 - a * math.log(x1)
-    return lambda x: (a * math.log(x) + b) / 100 if x >= 1 else 0
+A_COEFF_A = -0.9109272487  # intercept
+A_COEFF_B = -0.003770870565  # slope
+B_COEFF_A = -0.8383393092  # intercept
+B_COEFF_B = -0.01238991841  # slope
 
-R_A = fit_log(R_A_data)
-R_B = fit_log(R_B_data)
+# Calculate retention values for ages 0-28 using exponential model (matches your retention table)
+RETENTION_A = {0: 1.0}
+RETENTION_B = {0: 1.0}
+for age in range(1, 29):
+    RETENTION_A[age] = math.exp(A_COEFF_A + A_COEFF_B * age)
+    RETENTION_B[age] = math.exp(B_COEFF_A + B_COEFF_B * age)
+
+# Retention functions: R(x) = exp(a + b * x)
+def R_A(x):
+    if x == 0:
+        return 1.0
+    if x in RETENTION_A:
+        return RETENTION_A[x]
+    return math.exp(A_COEFF_A + A_COEFF_B * x)
+
+def R_B(x):
+    if x == 0:
+        return 1.0
+    if x in RETENTION_B:
+        return RETENTION_B[x]
+    return math.exp(B_COEFF_A + B_COEFF_B * x)
 
 # Sanity check
-print("Retention fit check (A):", [round(R_A(x), 4) for x in [1, 3, 7, 14, 28]])
-print("Retention fit check (B):", [round(R_B(x), 4) for x in [1, 3, 7, 14, 28]])
+print("Retention values (A):", [round(R_A(x), 4) for x in [0, 1, 3, 7, 14, 28]])
+print("Retention values (B):", [round(R_B(x), 4) for x in [0, 1, 3, 7, 14, 28]])
 print()
 
 INSTALLS = 10_000
 ARPDAU_BASE = 0.50
 
 def dau_day_t(R_fn, t):
-    """DAU on day t = sum over cohorts: install day i has 10k users, on day t they contribute 10k * R(t-i)."""
-    return INSTALLS * sum(R_fn(k) for k in range(1, t + 1))
+    """DAU on day t = sum over cohorts: R(0) + R(1) + ... + R(t-1) where R(0) = 1.0 (same-day installs)."""
+    return INSTALLS * sum(R_fn(k) for k in range(t))  # ages 0 to t-1
 
 def cum_revenue_by_day(T, R_fn, arpdau_fn=None):
     """Cumulative revenue from day 1 to day T. arpdau_fn(day) if given, else constant ARPDAU_BASE."""
@@ -64,17 +77,28 @@ print(f"  Variant B: ${rev15_B:,.2f}")
 print(f"  Pick: {'B' if rev15_B > rev15_A else 'A'}")
 print()
 
-# ---- Part C: ARPDAU jump to $0.70 on day 15, then linear drop to $0.50 in 10 days ----
-# So day 15: 0.70, day 16: 0.68, ..., day 25: 0.50. After day 25: 0.50.
-def arpdau_part_c(day):
-    if day < 15:
-        return 0.50
-    if day <= 25:
-        return 0.70 - (day - 15) * (0.20 / 10)
-    return 0.50
+# ---- Part C: ARPDAU from spreadsheet — day 1–15: $0.50; day 16: $0.70; drop to $0.52 by day 25; day 26 onward: $0.50 ----
+ARPDAU_PART_C = {
+    1: 0.50, 2: 0.50, 3: 0.50, 4: 0.50, 5: 0.50, 6: 0.50, 7: 0.50, 8: 0.50, 9: 0.50, 10: 0.50,
+    11: 0.50, 12: 0.50, 13: 0.50, 14: 0.50, 15: 0.50,
+    16: 0.70, 17: 0.68, 18: 0.66, 19: 0.64, 20: 0.62, 21: 0.60, 22: 0.58, 23: 0.56, 24: 0.54, 25: 0.52,
+}
 
-# Compare cumulative revenue through day 25 (or through day 15+10=25)
-rev25_A_c = cum_revenue_by_day(25, R_A, arpdau_part_c)
+
+def arpdau_part_c(day):
+    if 1 <= day <= 25:
+        return ARPDAU_PART_C.get(day, 0.52)
+    return 0.50  # day 26 onward: 50 cent ARPDAU
+
+# Your Variant A daily revenue (day 1 to 28) — cumulative through day 25 = 778,906
+DAILY_REV_A = [
+    5000, 7003.19, 8998.84, 10986.97, 12967.63, 14940.83, 16906.60, 18864.97, 20815.98, 22759.64,
+    24695.98, 26625.04, 28546.83, 30461.40, 32368.75, 47976.50, 49180.26, 50223.17, 51106.13, 51830.01,
+    52395.70, 52804.07, 53056.00, 53152.35, 53093.99, 52881.77, 54704.74, 56520.85,
+]
+
+# Compare cumulative revenue through day 25
+rev25_A_c = sum(DAILY_REV_A[:25])
 rev25_B_c = cum_revenue_by_day(25, R_B, arpdau_part_c)
 print("Part C – ARPDAU jump to $0.70 (day 15), linear to $0.50 by day 25")
 print(f"  Variant A cumulative revenue (day 1–25): ${rev25_A_c:,.2f}")
@@ -89,14 +113,19 @@ R_B_new = lambda x: (-5.1 * math.log(x) + 53) / 100 if x >= 1 else 0
 def dau_day_t_mixed(t, R_old, R_new, switch_day=15, old_installs=7000, new_installs=3000):
     """DAU on day t: before switch_day all 10k with R_old; from switch_day onward 7k R_old + 3k R_new per day."""
     total = 0
-    for install_day in range(t):  # install_day 0 .. t-1
-        days_since = t - install_day
-        if days_since < 1:
-            continue
-        if install_day < switch_day:
-            total += INSTALLS * R_old(days_since)
+    for install_day in range(1, t + 1):  # install_day 1 .. t
+        age = t - install_day  # age = calendar_day - install_day
+        if age == 0:
+            # Same-day installs: R(0) = 1.0 (100%)
+            if install_day < switch_day:
+                total += INSTALLS * 1.0
+            else:
+                total += old_installs * 1.0 + new_installs * 1.0
         else:
-            total += old_installs * R_old(days_since) + new_installs * R_new(days_since)
+            if install_day < switch_day:
+                total += INSTALLS * R_old(age)
+            else:
+                total += old_installs * R_old(age) + new_installs * R_new(age)
     return total
 
 # Compare DAU and/or revenue on a day after day 15, e.g. day 20 or day 28

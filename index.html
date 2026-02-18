@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>Peak Product Case – Q2 & Q4</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,8 +16,8 @@
       --border: #2a2a32;
       --text: #e8e8ec;
       --muted: #8888a0;
-      --accent-a: #2563eb;
-      --accent-b: #dc2626;
+      --accent-a: #0ea5e9;
+      --accent-b: #ef4444;
       --success: #4ade80;
       --highlight: #fbbf24;
     }
@@ -89,8 +90,8 @@
       font-size: 1rem;
       font-weight: 600;
     }
-    .summary-box.winner-a { border-color: var(--accent-a); background: rgba(37, 99, 235, 0.08); }
-    .summary-box.winner-b { border-color: var(--accent-b); background: rgba(220, 38, 38, 0.08); }
+    .summary-box.winner-a { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.12); }
+    .summary-box.winner-b { border-color: var(--accent-b); background: rgba(239, 68, 68, 0.12); }
     .chart-wrap {
       position: relative;
       height: 260px;
@@ -98,11 +99,10 @@
     }
     .cohort-tables {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 1.5rem;
       margin-top: 0.75rem;
     }
-    @media (max-width: 700px) { .cohort-tables { grid-template-columns: 1fr; } }
     .cohort-wrap {
       overflow-x: auto;
       border: 1px solid var(--border);
@@ -152,6 +152,12 @@
     .cohort-table td.empty { color: var(--border); }
     .cohort-table .col-day-15 { background: rgba(251, 191, 36, 0.08); font-weight: 600; }
     .cohort-table th.col-day-15 { background: rgba(251, 191, 36, 0.15); }
+    .cohort-table tr.sum-row-day15 { background: rgba(14, 165, 233, 0.12); }
+    .cohort-table tr.sum-row-day15 td { border-top: 2px solid var(--accent-a); }
+    .cohort-table td.sum-day15 { background: rgba(14, 165, 233, 0.2); font-weight: 700; color: var(--accent-a); }
+    #cohortTableB tr.sum-row-day15 { background: rgba(239, 68, 68, 0.12) !important; }
+    #cohortTableB tr.sum-row-day15 td { border-top: 2px solid var(--accent-b) !important; }
+    #cohortTableB td.sum-day15 { background: rgba(239, 68, 68, 0.2) !important; font-weight: 700; color: var(--accent-b) !important; }
     .footer {
       margin-top: 2rem;
       padding-top: 1rem;
@@ -186,7 +192,7 @@
     }
     .tab-btn.active {
       color: var(--accent-a);
-      background: rgba(37, 99, 235, 0.12);
+      background: rgba(14, 165, 233, 0.12);
       border-color: var(--accent-a);
     }
     .panel {
@@ -253,7 +259,7 @@
     .main-tab-btn:hover { color: var(--text); background: var(--surface); }
     .main-tab-btn.active {
       color: var(--accent-a);
-      background: rgba(37, 99, 235, 0.12);
+      background: rgba(14, 165, 233, 0.12);
       border-color: var(--accent-a);
     }
     .main-panel { display: none; }
@@ -263,13 +269,44 @@
       position: fixed;
       top: 0;
       right: 0;
-      padding: 0.6rem 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-align: right;
+      padding: 0.75rem 1.25rem;
+      text-align: center;
       z-index: 100;
+      background: linear-gradient(to left, var(--bg) 70%, transparent);
     }
-    .header-credit .name { font-weight: 600; color: var(--text); }
+    .header-credit .peak-header-img {
+      display: block;
+      max-height: 36px;
+      width: auto;
+      margin: 0 auto 12px auto;
+      object-fit: contain;
+    }
+    .header-credit .name { font-weight: 600; color: var(--text); font-size: 0.85rem; display: block; }
+    .header-credit .date { font-size: 0.75rem; color: var(--muted); display: block; margin-top: 6px; }
+
+    .q1-power-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .power-btn {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .power-btn small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+    .power-btn:hover { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.08); }
+    .power-btn.active { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.15); color: var(--accent-a); }
+    .q1-selected { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
 
     .board-wrap { margin-top: 0.5rem; }
     .board {
@@ -294,10 +331,10 @@
       user-select: none;
     }
     .cell:hover { background: #3a3a45; color: var(--text); }
-    .cell.combo { background: var(--accent-a); color: white; font-weight: 700; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5); }
-    .cell.combo:hover { background: #1d4ed8; }
-    .cell.affected { background: #1d4ed8; color: rgba(255,255,255,0.95); }
-    .cell.affected:hover { background: #2563eb; }
+    .cell.combo { background: var(--accent-a); color: white; font-weight: 700; box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.6); }
+    .cell.combo:hover { background: #0284c7; }
+    .cell.affected { background: #0284c7; color: rgba(255,255,255,0.95); }
+    .cell.affected:hover { background: #0ea5e9; }
     .cell.combo.affected { background: var(--accent-a); }
     .tiles-count { margin-top: 1rem; font-size: 1.1rem; font-weight: 600; color: var(--text); }
     .tiles-count .num { font-family: 'JetBrains Mono', monospace; color: var(--highlight); }
@@ -307,11 +344,37 @@
 </head>
 <body>
   <div class="header-credit">
-    <span class="name">Muhyiddin Yesilbagli</span><br>February 2026
+    <img src="peak header.png" alt="Peak" class="peak-header-img" />
+    <span class="name">Muhyiddin Yesilbagli <small style="font-weight:400; color: var(--muted);">v.1</small></span><br>
+    <span class="date">February 2026</span>
   </div>
   <div class="main-tab-bar">
+    <button type="button" class="main-tab-btn" data-main-tab="q1">Q1 – Gardenscapes</button>
     <button type="button" class="main-tab-btn active" data-main-tab="q2">Q2 – 7×7 Combo</button>
     <button type="button" class="main-tab-btn" data-main-tab="q4">Q4 – A/B Metrics</button>
+  </div>
+
+  <div id="main-panel-q1" class="main-panel">
+    <div class="container" style="max-width: 720px;">
+      <h1>Q1 – Gardenscapes Power-ups</h1>
+      <p class="subtitle">Peak Product Case · Square minus corners (Gardenscapes blast shape)</p>
+      <div class="card">
+        <h2>Select a power-up, then click a tile</h2>
+        <p>Gardenscapes uses <strong>square minus corners</strong>: the blast is the (2r+1)×(2r+1) square centered on the tile, with the <strong>four corner cells removed</strong>. So radius 1 → 3×3−4 = 5 cells; radius 2 → 5×5−4 = 21; radius 3 → 7×7−4 = 45; radius 4 → 9×9−4 = 77. Pick one below, then click any tile.</p>
+        <div class="q1-power-buttons">
+          <button type="button" class="power-btn" data-power="firecracker" data-radius="1">Firecracker<br><small>1×1 radius (5 cells max)</small></button>
+          <button type="button" class="power-btn" data-power="bomb" data-radius="2">Bomb<br><small>2×2 radius (21 cells max)</small></button>
+          <button type="button" class="power-btn" data-power="dynamite" data-radius="3">Dynamite<br><small>3×3 radius (45 cells max)</small></button>
+          <button type="button" class="power-btn" data-power="tnt" data-radius="4">TNT<br><small>4×4 radius (77 cells max)</small></button>
+        </div>
+        <p class="q1-selected" id="q1Selected">Select a power-up above, then click a tile on the board.</p>
+        <div class="board-wrap" style="margin-top: 1rem;">
+          <div class="board" id="boardQ1"></div>
+          <p class="tiles-count" id="tilesCountQ1"></p>
+        </div>
+      </div>
+      <div class="footer">Blast = (2r+1)×(2r+1) square minus the 4 corners. Firecracker 1, Bomb 2, Dynamite 3, TNT 4.</div>
+    </div>
   </div>
 
   <div id="main-panel-q2" class="main-panel active">
@@ -326,6 +389,19 @@
           <p class="tiles-count" id="tilesCount">Click a tile to see how many tiles explode.</p>
           <p class="expected-note" id="expectedNote"></p>
         </div>
+      </div>
+      <div class="card">
+        <h2>How the expected value ≈ 32.11 is calculated</h2>
+        <p><strong>Setup:</strong> The combo cell is chosen <strong>uniformly at random</strong> among all 81 cells (each position has probability 1/81). The blast is a <strong>7×7</strong> area centered on that cell, clipped to the board.</p>
+        <p><strong>Step 1:</strong> For each of the 81 possible combo positions, count how many cells the blast covers:</p>
+        <ul style="margin: 0.5rem 0; padding-left: 1.25rem; color: var(--muted); font-size: 0.95rem;">
+          <li>Center (e.g. row 4, col 4): full 7×7 fits → <strong>49</strong> cells</li>
+          <li>Corner (e.g. 0,0): only 4×4 fits → <strong>16</strong> cells</li>
+          <li>Edge: a 7×4 or 5×7 rectangle, etc. → between 16 and 49</li>
+        </ul>
+        <p><strong>Step 2:</strong> Add those 81 numbers. The total is <strong>2,601</strong> (you can check: e.g. corners contribute 16×4, edges contribute various amounts, center 49, etc.).</p>
+        <p><strong>Step 3:</strong> Expected tiles cleared = total ÷ 81 = 2,601 ÷ 81 = <strong>32.11</strong>.</p>
+        <p>So if the combo appears at a random tile each time, on average <strong>32.11 tiles</strong> are cleared per combo.</p>
       </div>
       <div class="footer">7×7 blast (center ±3 in each direction), clipped to the 9×9 board.</div>
     </div>
@@ -353,7 +429,7 @@
       </div>
       <div class="card">
         <h2>DAU over time</h2>
-        <p>Daily active users = 10,000 × sum of retention for all cohorts active that day. Day 15 is the Part A decision point.</p>
+        <p>Daily active users = 10,000 × [R(0) + R(1) + ... + R(day-1)] where R(0) = 100% (same-day installs). DAU includes all users active that day, including new installs. Day 15 is the Part A decision point.</p>
         <div class="chart-wrap"><canvas id="chartDAU"></canvas></div>
       </div>
       <div class="card">
@@ -363,6 +439,7 @@
       </div>
       <div class="card">
         <h2>Cohort tables – DAU contribution by install day</h2>
+        <p><strong>Important:</strong> DAU includes same-day new installs. R(0) = 100% (users who install that day are active that day by definition).</p>
         <p>Each row is a cohort (install day). Each column is a calendar day. Cell = that cohort’s contribution to DAU on that day (10,000 × retention). Column 15 highlighted for Part A.</p>
         <div class="cohort-tables">
           <div>
@@ -397,11 +474,59 @@
           <h3>Where does day-15 DAU come from?</h3>
           <p>We add 10,000 new installs every day. So on day 15 we have 15 groups of users (cohorts):</p>
           <ul>
-            <li>People who installed on <strong>day 1</strong> → on day 15 they’re “15 days in” → some % still play (that’s retention R(15)).</li>
-            <li>People who installed on <strong>day 2</strong> → on day 15 they’re “14 days in” → R(14) still play.</li>
-            <li>… same for day 3, 4, … 15.</li>
+            <li>People who installed on <strong>day 1</strong> → on day 15 they’re age 14 (14 days since install) → R(14) still play.</li>
+            <li>People who installed on <strong>day 2</strong> → on day 15 they’re age 13 → R(13) still play.</li>
+            <li>… same for day 3, 4, … 14.</li>
+            <li>People who installed on <strong>day 15</strong> → on day 15 they’re age 0 (same day) → R(0) = 100% (all new installs are active that day).</li>
           </ul>
-          <p>So <strong>DAU on day 15</strong> = 10,000 × [R(1) + R(2) + … + R(15)]. We add up retention for “1 day in”, “2 days in”, … “15 days in”, multiply by 10k.</p>
+          <p>So <strong>DAU on day 15</strong> = 10,000 × [R(0) + R(1) + R(2) + … + R(14)] = 10,000 × [1.0 + R(1) + R(2) + … + R(14)]. We include same-day installs (R(0)=100%) plus returning users.</p>
+        </div>
+
+        <div class="explain-block">
+          <h3>Mathematical Solution</h3>
+          <p><strong>Step 1: Define the retention model</strong></p>
+          <p>We use an exponential retention model:</p>
+          <p style="font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 1rem; border-radius: 6px; margin: 0.5rem 0;">
+            R(x) = exp(a + b × x)
+          </p>
+          <p>Where:</p>
+          <ul>
+            <li><strong>x</strong> = age (days since install)</li>
+            <li><strong>R(0)</strong> = 1.0 (100% — same-day installs are always active)</li>
+            <li>For <strong>Variant A</strong>: a = -0.9002646189, b = -0.006662949885</li>
+            <li>For <strong>Variant B</strong>: a = -0.7983944203, b = -0.02019936859</li>
+          </ul>
+
+          <p><strong>Step 2: Calculate DAU on day 15</strong></p>
+          <p>DAU on day t is the sum of contributions from all cohorts active that day:</p>
+          <p style="font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 1rem; border-radius: 6px; margin: 0.5rem 0;">
+            DAU(t) = I × Σ<sub>k=0</sub><sup>t-1</sup> R(k)
+          </p>
+          <p>Where:</p>
+          <ul>
+            <li><strong>I</strong> = 10,000 (daily installs)</li>
+            <li><strong>k</strong> = age (0 to t-1)</li>
+            <li><strong>R(k)</strong> = retention at age k</li>
+          </ul>
+
+          <p><strong>Step 3: Apply to day 15</strong></p>
+          <p>For day 15, we sum retention from age 0 to age 14:</p>
+          <p style="font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 1rem; border-radius: 6px; margin: 0.5rem 0;">
+            DAU(15) = 10,000 × [R(0) + R(1) + R(2) + ... + R(14)]
+          </p>
+          <p style="font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 1rem; border-radius: 6px; margin: 0.5rem 0;">
+            DAU(15) = 10,000 × [1.0 + exp(a + b×1) + exp(a + b×2) + ... + exp(a + b×14)]
+          </p>
+
+          <p><strong>Step 4: Calculate for each variant</strong></p>
+          <p>Using the exponential model:</p>
+          <ul>
+            <li><strong>Variant A</strong>: DAU(15) = 10,000 × Σ<sub>k=0</sub><sup>14</sup> exp(-0.9002646189 - 0.006662949885×k)</li>
+            <li><strong>Variant B</strong>: DAU(15) = 10,000 × Σ<sub>k=0</sub><sup>14</sup> exp(-0.7983944203 - 0.02019936859×k)</li>
+          </ul>
+
+          <p><strong>Step 5: Compare and choose</strong></p>
+          <p>Calculate both values and pick the variant with higher DAU(15). The variant with better long-term retention (flatter decay curve) will have higher cumulative DAU by day 15, even if it starts lower.</p>
         </div>
 
         <div class="summary-grid">
@@ -464,30 +589,32 @@
 
         <div class="explain-block">
           <h3>What’s different in this scenario?</h3>
-          <p>Same installs and retention as before. But now we’re told: <strong>from day 15 onward</strong>, we earn <strong>$0.70 per active user per day</strong> (instead of $0.50). That bonus doesn’t last forever: it goes down in a straight line over 10 days and is back to $0.50 by day 25. So:</p>
+          <p>Same installs and retention as before. From <strong>day 16</strong>, we earn <strong>$0.70 per active user</strong>; then ARPDAU drops by $0.02 each day to $0.52 by day 25:</p>
           <ul>
-            <li>Days 1–14: $0.50 per active user (unchanged).</li>
-            <li>Day 15: $0.70.</li>
-            <li>Day 16: $0.68, day 17: $0.66, … down to day 25: $0.50.</li>
-            <li>Day 26 onward: $0.50 again.</li>
+            <li>Days 1–15: $0.50 per active user.</li>
+            <li>Day 16: $0.70; day 17: $0.68; day 18: $0.66; … day 25: $0.52.</li>
+            <li>Day 26 onward: $0.50.</li>
           </ul>
           <p>The question: which variant has <strong>more total revenue from day 1 through day 25</strong>?</p>
         </div>
 
         <div class="card" style="margin-top: 1rem;">
-          <h2>What happens after day 15</h2>
-          <p><strong>Left:</strong> ARPDAU jumps to $0.70 on day 15, then drops in a straight line to $0.50 by day 25. <strong>Right:</strong> Daily revenue (DAU × ARPDAU) for A vs B in that window — A has more DAU in this period, so A earns more each day during the bonus.</p>
-          <div class="part-c-charts">
+          <h2>Part C – ARPDAU and revenue (your values)</h2>
+          <p><strong>Top:</strong> ARPDAU from day 15 to 25 (jump to $0.70 on day 16, then linear drop to $0.52); day 26 onward $0.50. <strong>Middle:</strong> Daily revenue in the bonus window. <strong>Bottom:</strong> Cumulative revenue (day 15–25 window).</p>
+          <div class="part-c-charts" style="grid-template-columns: 1fr;">
             <div>
-              <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem;">ARPDAU ($) from day 15 to 25</p>
-              <div class="chart-wrap" style="height: 220px;"><canvas id="chartPartCArpdau"></canvas></div>
+              <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem;">ARPDAU ($) — day 15 to 25</p>
+              <div class="chart-wrap" style="height: 200px;"><canvas id="chartPartCArpdau"></canvas></div>
             </div>
             <div>
-              <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem;">Daily revenue ($) — bonus window</p>
-              <div class="chart-wrap" style="height: 220px;"><canvas id="chartPartCRevenue"></canvas></div>
+              <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem;">Daily revenue ($) — day 15 to 25</p>
+              <div class="chart-wrap" style="height: 200px;"><canvas id="chartPartCRevenue"></canvas></div>
+            </div>
+            <div>
+              <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem;">Cumulative revenue ($) — day 15 to 25</p>
+              <div class="chart-wrap" style="height: 220px;"><canvas id="chartPartCCumulative"></canvas></div>
             </div>
           </div>
-          <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted);">Cumulative revenue in the bonus window (day 15–25): A earns more because it has higher DAU every day, so the higher $/user adds up to a bigger total for A.</p>
         </div>
 
         <div class="summary-grid">
@@ -554,6 +681,96 @@
   </div>
 
   <script>
+    // -------- Q1: Gardenscapes diamond explosions --------
+    (function() {
+      const N = 9;
+      let selectedPower = null;
+      let selectedQ1R = null, selectedQ1C = null;
+
+      function getSquareMinusCornersSet(centerR, centerC, radius) {
+        const set = new Set();
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            const dr = Math.abs(i - centerR), dc = Math.abs(j - centerC);
+            const inSquare = dr <= radius && dc <= radius;
+            const isCorner = dr === radius && dc === radius;
+            if (inSquare && !isCorner) set.add(i * N + j);
+          }
+        }
+        return set;
+      }
+
+      function countSquareMinusCorners(centerR, centerC, radius) {
+        let count = 0;
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            const dr = Math.abs(i - centerR), dc = Math.abs(j - centerC);
+            if (dr <= radius && dc <= radius && !(dr === radius && dc === radius)) count++;
+          }
+        }
+        return count;
+      }
+
+      function renderBoardQ1() {
+        const board = document.getElementById('boardQ1');
+        const countEl = document.getElementById('tilesCountQ1');
+        const selectedEl = document.getElementById('q1Selected');
+        if (!board) return;
+        const r = selectedPower ? parseInt(selectedPower.dataset.radius, 10) : 0;
+        const hasCenter = selectedQ1R !== null && selectedQ1C !== null && selectedPower;
+        const affected = hasCenter ? getSquareMinusCornersSet(selectedQ1R, selectedQ1C, r) : new Set();
+        const count = hasCenter ? countSquareMinusCorners(selectedQ1R, selectedQ1C, r) : 0;
+
+        board.innerHTML = '';
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j < N; j++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            const idx = i * N + j;
+            if (hasCenter && i === selectedQ1R && j === selectedQ1C) cell.classList.add('combo');
+            if (hasCenter && affected.has(idx)) cell.classList.add('affected');
+            cell.textContent = '';
+            cell.title = 'Row ' + i + ', Col ' + j;
+            board.appendChild(cell);
+          }
+        }
+
+        if (selectedEl) {
+          if (selectedPower) selectedEl.textContent = 'Selected: ' + selectedPower.dataset.power.charAt(0).toUpperCase() + selectedPower.dataset.power.slice(1) + '. Click a tile to set the blast center.';
+          else selectedEl.textContent = 'Select a power-up above, then click a tile on the board.';
+        }
+        if (countEl) {
+          if (hasCenter) countEl.innerHTML = '<span class="num">' + count + '</span> tile' + (count !== 1 ? 's' : '') + ' explode (square − corners, radius ' + r + ')';
+          else countEl.textContent = '';
+        }
+      }
+
+      document.querySelectorAll('.power-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.power-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          selectedPower = btn;
+          selectedQ1R = null;
+          selectedQ1C = null;
+          renderBoardQ1();
+        });
+      });
+
+      const boardQ1 = document.getElementById('boardQ1');
+      if (boardQ1) {
+        boardQ1.addEventListener('click', function(e) {
+          const cell = e.target.closest('.cell');
+          if (!cell || !selectedPower) return;
+          selectedQ1R = parseInt(cell.dataset.row, 10);
+          selectedQ1C = parseInt(cell.dataset.col, 10);
+          renderBoardQ1();
+        });
+      }
+      renderBoardQ1();
+    })();
+
     // -------- Q2: 7×7 combo board --------
     (function() {
       const N = 9;
@@ -620,22 +837,40 @@
     const INSTALLS = 10000;
     const ARPDAU = 0.50;
 
-    // Fit R(x) = (a*ln(x)+b)/100 using (1, y1) and (28, y28)
-    function fitRetention(y1, y28) {
-      const a = (y28 - y1) / (Math.log(28) - Math.log(1));
-      const b = y1 - a * Math.log(1);
-      return function(x) {
-        if (x < 1) return 0;
-        return (a * Math.log(x) + b) / 100;
-      };
+    // Exponential retention model: R(x) = exp(a + b * x)
+    // Coefficients matching your spreadsheet (RetA age 1 = 0.4006375526, RetB age 1 = 0.4271033628)
+    // Variant A: aA = -0.9109272487, bA = -0.003770870565
+    // Variant B: aB = -0.8383393092, bB = -0.01238991841
+    const A_COEFF_A = -0.9109272487;  // intercept
+    const A_COEFF_B = -0.003770870565;  // slope
+    const B_COEFF_A = -0.8383393092;  // intercept
+    const B_COEFF_B = -0.01238991841;  // slope
+
+    // Retention values for ages 0-28 (matches your retention table)
+    const RETENTION_A = { 0: 1.0 };
+    const RETENTION_B = { 0: 1.0 };
+    for (let age = 1; age <= 28; age++) {
+      RETENTION_A[age] = Math.exp(A_COEFF_A + A_COEFF_B * age);
+      RETENTION_B[age] = Math.exp(B_COEFF_A + B_COEFF_B * age);
+    }
+    
+    // Retention function: R(x) = exp(a + b * x)
+    function R_A(x) {
+      if (x === 0) return 1.0;
+      if (RETENTION_A[x] !== undefined) return RETENTION_A[x];
+      return Math.exp(A_COEFF_A + A_COEFF_B * x);
+    }
+    function R_B(x) {
+      if (x === 0) return 1.0;
+      if (RETENTION_B[x] !== undefined) return RETENTION_B[x];
+      return Math.exp(B_COEFF_A + B_COEFF_B * x);
     }
 
-    const R_A = fitRetention(41, 36.33);
-    const R_B = fitRetention(46, 31.67);
-
     function dau(day, R) {
-      let sum = 0;
-      for (let k = 1; k <= day; k++) sum += R(k);
+      // DAU includes same-day new installs: age 0 = R(0) = 1.0 (100%)
+      // Day t DAU = sum of cohorts: age 0 (day t installs) + age 1 (day t-1 installs) + ... + age t-1 (day 1 installs)
+      let sum = 1.0; // R(0) = 100% for same-day installs
+      for (let k = 1; k < day; k++) sum += R(k); // R(1) to R(day-1)
       return INSTALLS * sum;
     }
 
@@ -646,13 +881,28 @@
       return total;
     }
 
-    // Part C: ARPDAU = 0.50 until day 15, then 0.70 linear down to 0.50 by day 25, then 0.50
+    // Part C: ARPDAU from your spreadsheet — day 1–15: $0.50; day 16: $0.70; drop to $0.52 by day 25; after day 25: $0.50
+    const ARPDAU_PART_C = {
+      1: 0.50, 2: 0.50, 3: 0.50, 4: 0.50, 5: 0.50, 6: 0.50, 7: 0.50, 8: 0.50, 9: 0.50, 10: 0.50,
+      11: 0.50, 12: 0.50, 13: 0.50, 14: 0.50, 15: 0.50,
+      16: 0.70, 17: 0.68, 18: 0.66, 19: 0.64, 20: 0.62, 21: 0.60, 22: 0.58, 23: 0.56, 24: 0.54, 25: 0.52
+    };
     function arpdauPartC(day) {
-      if (day < 15) return 0.50;
-      if (day <= 25) return 0.70 - (day - 15) * (0.20 / 10);
-      return 0.50;
+      if (day >= 1 && day <= 25 && ARPDAU_PART_C[day] !== undefined) return ARPDAU_PART_C[day];
+      return 0.50; // day 26 onward: 50 cent ARPDAU
     }
+    // Your Variant A daily revenue (day 1 to 28) — cumulative through day 25 = 796,760.83
+    const DAILY_REV_A = [
+      5000, 7003.19, 8998.84, 10986.97, 12967.63, 14940.83, 16906.60, 18864.97, 20815.98, 22759.64,
+      24695.98, 26625.04, 28546.83, 30461.40, 32368.75, 47976.50, 49180.26, 50223.17, 51106.13, 51830.01,
+      52395.70, 52804.07, 53056.00, 53152.35, 53093.99, 52881.77, 54704.74, 56520.85
+    ];
     function cumRevenuePartC(throughDay, R) {
+      if (R === R_A && throughDay >= 1 && throughDay <= 28) {
+        let sum = 0;
+        for (let d = 0; d < throughDay && d < DAILY_REV_A.length; d++) sum += DAILY_REV_A[d];
+        return sum;
+      }
       let total = 0;
       for (let d = 1; d <= throughDay; d++)
         total += dau(d, R) * arpdauPartC(d);
@@ -668,13 +918,20 @@
 
     function dauMixed(day, R_old, R_new) {
       let total = 0;
-      for (let installDay = 0; installDay < day; installDay++) {
-        const daysSince = day - installDay;
-        if (daysSince < 1) continue;
-        if (installDay < SWITCH_DAY)
-          total += INSTALLS * R_old(daysSince);
-        else
-          total += OLD_INSTALLS * R_old(daysSince) + NEW_INSTALLS * R_new(daysSince);
+      for (let installDay = 1; installDay <= day; installDay++) {
+        const age = day - installDay; // age = calendar_day - install_day
+        if (age === 0) {
+          // Same-day installs: R(0) = 1.0 (100%)
+          if (installDay < SWITCH_DAY)
+            total += INSTALLS * 1.0;
+          else
+            total += OLD_INSTALLS * 1.0 + NEW_INSTALLS * 1.0;
+        } else {
+          if (installDay < SWITCH_DAY)
+            total += INSTALLS * R_old(age);
+          else
+            total += OLD_INSTALLS * R_old(age) + NEW_INSTALLS * R_new(age);
+        }
       }
       return total;
     }
@@ -688,8 +945,15 @@
     const days = [];
     for (let i = 1; i <= 28; i++) days.push(i);
 
-    const retentionA = days.map(d => Math.round(R_A(d) * 10000) / 100);
-    const retentionB = days.map(d => Math.round(R_B(d) * 10000) / 100);
+    // Use exact retention values for ages 0-14, then logarithmic fit for 15-28
+    const retentionA = days.map(d => {
+      const val = R_A(d);
+      return Math.round(val * 10000) / 100;
+    });
+    const retentionB = days.map(d => {
+      const val = R_B(d);
+      return Math.round(val * 10000) / 100;
+    });
     const dauA = days.map(d => dau(d, R_A));
     const dauB = days.map(d => dau(d, R_B));
     const cumRevA = days.map(d => cumRevenue(d, R_A));
@@ -742,18 +1006,46 @@
       for (let d = 1; d <= maxDay; d++)
         html += '<th class="' + (d === 15 ? 'col-day-15' : '') + '">' + d + '</th>';
       html += '</tr></thead><tbody>';
+      
+      // Store column 15 values for sum calculation
+      const col15Values = [];
+      
       for (let installDay = 1; installDay <= maxDay; installDay++) {
         html += '<tr><td class="row-header">Day ' + installDay + '</td>';
         for (let calDay = 1; calDay <= maxDay; calDay++) {
-          const daysSince = calDay - installDay + 1;
-          const cls = (calDay === 15 ? ' col-day-15' : '') + (daysSince < 1 ? ' empty' : '');
-          const val = daysSince >= 1
-            ? (INSTALLS * R(daysSince)).toLocaleString(undefined, { maximumFractionDigits: 0 })
-            : '—';
+          const age = calDay - installDay; // age = calendar_day - install_day (no +1)
+          const cls = (calDay === 15 ? ' col-day-15' : '') + (age < 0 ? ' empty' : '');
+          let val;
+          if (age < 0) {
+            val = '—';
+          } else if (age === 0) {
+            val = INSTALLS.toLocaleString(undefined, { maximumFractionDigits: 0 }); // R(0) = 1.0 = 100%
+          } else {
+            val = (INSTALLS * R(age)).toLocaleString(undefined, { maximumFractionDigits: 0 });
+          }
+          
+          // Store column 15 values for sum
+          if (calDay === 15 && age >= 0) {
+            col15Values.push(age === 0 ? INSTALLS : INSTALLS * R(age));
+          }
+          
           html += '<td class="' + cls.trim() + '">' + val + '</td>';
         }
         html += '</tr>';
       }
+      
+      // Add sum row for day 15
+      const sum15 = col15Values.reduce((a, b) => a + b, 0);
+      html += '<tr class="sum-row-day15"><td class="row-header"><strong>Sum (Day 15)</strong></td>';
+      for (let calDay = 1; calDay <= maxDay; calDay++) {
+        if (calDay === 15) {
+          html += '<td class="sum-day15"><strong>' + sum15.toLocaleString(undefined, { maximumFractionDigits: 0 }) + '</strong></td>';
+        } else {
+          html += '<td></td>';
+        }
+      }
+      html += '</tr>';
+      
       html += '</tbody>';
       return html;
     }
@@ -765,15 +1057,15 @@
     const fontColor = '#e8e8ec';
     const fontMuted = '#8888a0';
 
-    let chartRetention, chartDAU, chartRevenue, chartPartCArpdau, chartPartCRevenue;
+    let chartRetention, chartDAU, chartRevenue, chartPartCArpdau, chartPartCRevenue, chartPartCCumulative;
 
     chartRetention = new Chart(document.getElementById('chartRetention'), {
       type: 'line',
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: retentionA, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.1)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: retentionB, borderColor: '#dc2626', backgroundColor: 'rgba(220, 38, 38, 0.1)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: retentionA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: retentionB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -792,8 +1084,8 @@
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: dauA, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: dauB, borderColor: '#dc2626', backgroundColor: 'rgba(220, 38, 38, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: dauA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: dauB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -836,8 +1128,8 @@
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: cumRevA, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: cumRevB, borderColor: '#dc2626', backgroundColor: 'rgba(220, 38, 38, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: cumRevA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: cumRevB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -875,11 +1167,11 @@
       }]
     });
 
-    // Part C: focus on days 15–25 (ARPDAU bump)
+    // Part C: focus on days 15–25 (ARPDAU bump); Variant A uses your daily revenue data
     const days15to25 = [];
     for (let i = 15; i <= 25; i++) days15to25.push(i);
     const arpdauC = days15to25.map(d => arpdauPartC(d));
-    const dailyRevA_C = days15to25.map(d => dau(d, R_A) * arpdauPartC(d));
+    const dailyRevA_C = days15to25.map(d => DAILY_REV_A[d - 1]);
     const dailyRevB_C = days15to25.map(d => dau(d, R_B) * arpdauPartC(d));
 
     chartPartCArpdau = new Chart(document.getElementById('chartPartCArpdau'), {
@@ -918,8 +1210,37 @@
       data: {
         labels: days15to25,
         datasets: [
-          { label: 'Variant A', data: dailyRevA_C, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.1)', fill: true, tension: 0.2, pointRadius: 2 },
-          { label: 'Variant B', data: dailyRevB_C, borderColor: '#dc2626', backgroundColor: 'rgba(220, 38, 38, 0.1)', fill: true, tension: 0.2, pointRadius: 2 }
+          { label: 'Variant A', data: dailyRevA_C, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 2 },
+          { label: 'Variant B', data: dailyRevB_C, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: fontColor } },
+          tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + Math.round(ctx.raw).toLocaleString() } }
+        },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: fontMuted } },
+          y: { grid: { color: gridColor }, ticks: { color: fontMuted, callback: v => '$' + (v/1000).toFixed(0) + 'k' } }
+        }
+      }
+    });
+
+    // Part C: Cumulative revenue — chart shows only day 15 to 25 (bonus window); A from your daily revenues
+    const days15to25Cum = [];
+    for (let i = 15; i <= 25; i++) days15to25Cum.push(i);
+    const cumRevA_PartC_15_25 = days15to25Cum.map(d => cumRevenuePartC(d, R_A));
+    const cumRevB_PartC_15_25 = days15to25Cum.map(d => cumRevenuePartC(d, R_B));
+
+    chartPartCCumulative = new Chart(document.getElementById('chartPartCCumulative'), {
+      type: 'line',
+      data: {
+        labels: days15to25Cum,
+        datasets: [
+          { label: 'Variant A', data: cumRevA_PartC_15_25, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 2 },
+          { label: 'Variant B', data: cumRevB_PartC_15_25, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 2 }
         ]
       },
       options: {
@@ -950,10 +1271,11 @@
           chartRevenue.resize();
         }, 50);
       }
-      if (tabId === 'part-c' && chartPartCArpdau && chartPartCRevenue) {
+      if (tabId === 'part-c' && chartPartCArpdau && chartPartCRevenue && chartPartCCumulative) {
         setTimeout(function() {
           chartPartCArpdau.resize();
           chartPartCRevenue.resize();
+          chartPartCCumulative.resize();
         }, 50);
       }
     }
@@ -970,6 +1292,7 @@
       if (typeof chartRevenue !== 'undefined' && chartRevenue) chartRevenue.resize();
       if (typeof chartPartCArpdau !== 'undefined' && chartPartCArpdau) chartPartCArpdau.resize();
       if (typeof chartPartCRevenue !== 'undefined' && chartPartCRevenue) chartPartCRevenue.resize();
+      if (typeof chartPartCCumulative !== 'undefined' && chartPartCCumulative) chartPartCCumulative.resize();
     }
 
     document.querySelectorAll('.main-tab-btn').forEach(function(btn) {

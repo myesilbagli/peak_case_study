@@ -11,15 +11,21 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f0f12;
-      --surface: #1a1a20;
-      --border: #2a2a32;
-      --text: #e8e8ec;
-      --muted: #8888a0;
-      --accent-a: #0ea5e9;
-      --accent-b: #ef4444;
-      --success: #4ade80;
-      --highlight: #fbbf24;
+      --bg: #E3E6EA;
+      --surface: #ffffff;
+      --surface-soft: #f5f6f8;
+      --border: #c5c9d1;
+      --text: #1A237E;
+      --text-body: #2d3748;
+      --muted: #5c6b7a;
+      --navy: #1A237E;
+      --navy-light: rgba(26, 35, 126, 0.12);
+      --red: #B71C1C;
+      --red-light: rgba(183, 28, 28, 0.12);
+      --accent-a: #1A237E;
+      --accent-b: #B71C1C;
+      --success: #2e7d32;
+      --highlight: #B71C1C;
     }
     * { box-sizing: border-box; }
     body {
@@ -27,7 +33,7 @@
       min-height: 100vh;
       font-family: 'DM Sans', system-ui, sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-body);
       line-height: 1.5;
     }
     .container {
@@ -40,6 +46,7 @@
       font-weight: 700;
       margin: 0 0 0.25rem 0;
       letter-spacing: -0.02em;
+      color: var(--text);
     }
     .subtitle {
       color: var(--muted);
@@ -52,13 +59,14 @@
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
       margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(26, 35, 126, 0.08);
     }
     .card h2 {
       font-size: 0.85rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--muted);
+      color: var(--text);
       margin: 0 0 0.75rem 0;
     }
     p {
@@ -76,7 +84,7 @@
       padding: 0.75rem 1rem;
       border-radius: 8px;
       border: 1px solid var(--border);
-      background: var(--bg);
+      background: var(--surface-soft);
     }
     .summary-box .label {
       font-size: 0.75rem;
@@ -90,8 +98,8 @@
       font-size: 1rem;
       font-weight: 600;
     }
-    .summary-box.winner-a { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.12); }
-    .summary-box.winner-b { border-color: var(--accent-b); background: rgba(239, 68, 68, 0.12); }
+    .summary-box.winner-a { border-color: var(--accent-a); background: var(--navy-light); }
+    .summary-box.winner-b { border-color: var(--accent-b); background: var(--red-light); }
     .chart-wrap {
       position: relative;
       height: 260px;
@@ -107,7 +115,7 @@
       overflow-x: auto;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--bg);
+      background: var(--surface-soft);
     }
     .cohort-table {
       width: 100%;
@@ -136,7 +144,7 @@
       padding: 0.3rem 0.35rem;
       text-align: right;
       border-bottom: 1px solid var(--border);
-      color: var(--text);
+      color: var(--text-body);
     }
     .cohort-table td.row-header {
       text-align: left;
@@ -144,20 +152,20 @@
       color: var(--muted);
       position: sticky;
       left: 0;
-      background: var(--bg);
+      background: var(--surface-soft);
       z-index: 1;
     }
     .cohort-table tr:hover td.row-header { background: var(--surface); }
-    .cohort-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .cohort-table tr:hover td { background: rgba(26, 35, 126, 0.04); }
     .cohort-table td.empty { color: var(--border); }
-    .cohort-table .col-day-15 { background: rgba(251, 191, 36, 0.08); font-weight: 600; }
-    .cohort-table th.col-day-15 { background: rgba(251, 191, 36, 0.15); }
-    .cohort-table tr.sum-row-day15 { background: rgba(14, 165, 233, 0.12); }
+    .cohort-table .col-day-15 { background: var(--red-light); font-weight: 600; }
+    .cohort-table th.col-day-15 { background: rgba(183, 28, 28, 0.15); }
+    .cohort-table tr.sum-row-day15 { background: var(--navy-light); }
     .cohort-table tr.sum-row-day15 td { border-top: 2px solid var(--accent-a); }
-    .cohort-table td.sum-day15 { background: rgba(14, 165, 233, 0.2); font-weight: 700; color: var(--accent-a); }
-    #cohortTableB tr.sum-row-day15 { background: rgba(239, 68, 68, 0.12) !important; }
+    .cohort-table td.sum-day15 { background: rgba(26, 35, 126, 0.2); font-weight: 700; color: var(--accent-a); }
+    #cohortTableB tr.sum-row-day15 { background: var(--red-light) !important; }
     #cohortTableB tr.sum-row-day15 td { border-top: 2px solid var(--accent-b) !important; }
-    #cohortTableB td.sum-day15 { background: rgba(239, 68, 68, 0.2) !important; font-weight: 700; color: var(--accent-b) !important; }
+    #cohortTableB td.sum-day15 { background: rgba(183, 28, 28, 0.2) !important; font-weight: 700; color: var(--accent-b) !important; }
     .footer {
       margin-top: 2rem;
       padding-top: 1rem;
@@ -188,11 +196,11 @@
     }
     .tab-btn:hover {
       color: var(--text);
-      background: var(--surface);
+      background: var(--surface-soft);
     }
     .tab-btn.active {
       color: var(--accent-a);
-      background: rgba(14, 165, 233, 0.12);
+      background: var(--navy-light);
       border-color: var(--accent-a);
     }
     .panel {
@@ -202,7 +210,7 @@
       display: block;
     }
     .explain-block {
-      background: var(--bg);
+      background: var(--surface-soft);
       border-radius: 8px;
       padding: 1rem 1.15rem;
       margin: 1rem 0;
@@ -256,10 +264,10 @@
       cursor: pointer;
       transition: color 0.15s, background 0.15s, border-color 0.15s;
     }
-    .main-tab-btn:hover { color: var(--text); background: var(--surface); }
+    .main-tab-btn:hover { color: var(--text); background: var(--surface-soft); }
     .main-tab-btn.active {
       color: var(--accent-a);
-      background: rgba(14, 165, 233, 0.12);
+      background: var(--navy-light);
       border-color: var(--accent-a);
     }
     .main-panel { display: none; }
@@ -282,6 +290,7 @@
       object-fit: contain;
     }
     .header-credit .name { font-weight: 600; color: var(--text); font-size: 0.85rem; display: block; }
+    .header-credit .name-accent { border-bottom: 2px wavy var(--red); }
     .header-credit .date { font-size: 0.75rem; color: var(--muted); display: block; margin-top: 6px; }
 
     .q1-power-buttons {
@@ -304,8 +313,8 @@
       transition: border-color 0.2s, background 0.2s;
     }
     .power-btn small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
-    .power-btn:hover { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.08); }
-    .power-btn.active { border-color: var(--accent-a); background: rgba(14, 165, 233, 0.15); color: var(--accent-a); }
+    .power-btn:hover { border-color: var(--accent-a); background: var(--navy-light); }
+    .power-btn.active { border-color: var(--accent-a); background: rgba(26, 35, 126, 0.15); color: var(--accent-a); }
     .q1-selected { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
 
     .board-wrap { margin-top: 0.5rem; }
@@ -330,23 +339,65 @@
       transition: background 0.15s;
       user-select: none;
     }
-    .cell:hover { background: #3a3a45; color: var(--text); }
-    .cell.combo { background: var(--accent-a); color: white; font-weight: 700; box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.6); }
-    .cell.combo:hover { background: #0284c7; }
-    .cell.affected { background: #0284c7; color: rgba(255,255,255,0.95); }
-    .cell.affected:hover { background: #0ea5e9; }
-    .cell.combo.affected { background: var(--accent-a); }
+    .cell:hover { background: #b8bcc4; color: var(--text-body); }
+    .cell.combo { background: var(--navy); color: white; font-weight: 700; box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.5); }
+    .cell.combo:hover { background: #0d1552; }
+    .cell.affected { background: var(--red); color: rgba(255,255,255,0.95); }
+    .cell.affected:hover { background: #8B0000; }
+    .cell.combo.affected { background: var(--navy); }
     .tiles-count { margin-top: 1rem; font-size: 1.1rem; font-weight: 600; color: var(--text); }
     .tiles-count .num { font-family: 'JetBrains Mono', monospace; color: var(--highlight); }
     .tiles-count .hint { font-weight: 400; font-size: 0.9rem; color: var(--muted); }
     .expected-note { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); }
+
+    /* Dark theme */
+    html[data-theme="dark"] {
+      --bg: #0f0f12;
+      --surface: #1a1a20;
+      --surface-soft: #252530;
+      --border: #2a2a32;
+      --text: #e8e8ec;
+      --text-body: #e8e8ec;
+      --muted: #8888a0;
+      --navy: #7986cb;
+      --navy-light: rgba(26, 35, 126, 0.35);
+      --red: #e57373;
+      --red-light: rgba(183, 28, 28, 0.25);
+      --accent-a: #7986cb;
+      --accent-b: #e57373;
+      --highlight: #e57373;
+    }
+    html[data-theme="dark"] .card { box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    html[data-theme="dark"] .cohort-table tr:hover td { background: rgba(255,255,255,0.04); }
+    html[data-theme="dark"] .cell:hover { background: #3a3a45; color: var(--text); }
+    html[data-theme="dark"] .cell.combo { box-shadow: 0 0 0 2px rgba(121, 134, 203, 0.6); }
+    html[data-theme="dark"] .cell.combo:hover { background: #5c6bc0; }
+    html[data-theme="dark"] .cell.affected:hover { background: #ef5350; }
+
+    .theme-toggle-wrap { margin-top: 10px; }
+    .theme-toggle {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
   </style>
 </head>
 <body>
   <div class="header-credit">
     <img src="peak header.png" alt="Peak" class="peak-header-img" />
-    <span class="name">Muhyiddin Yesilbagli <small style="font-weight:400; color: var(--muted);">v.1</small></span><br>
+    <span class="name">Muhyiddin <span class="name-accent">Yesilbagli</span> <small style="font-weight:400; color: var(--muted);">v.1</small></span><br>
     <span class="date">February 2026</span>
+    <div class="theme-toggle-wrap">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">Dark</button>
+    </div>
   </div>
   <div class="main-tab-bar">
     <button type="button" class="main-tab-btn" data-main-tab="q1">Q1 – Gardenscapes</button>
@@ -391,16 +442,18 @@
         </div>
       </div>
       <div class="card">
-        <h2>How the expected value ≈ 32.11 is calculated</h2>
-        <p><strong>Setup:</strong> The combo cell is chosen <strong>uniformly at random</strong> among all 81 cells (each position has probability 1/81). The blast is a <strong>7×7</strong> area centered on that cell, clipped to the board.</p>
-        <p><strong>Step 1:</strong> For each of the 81 possible combo positions, count how many cells the blast covers:</p>
+        <h2>Q-2 Expected tiles affected by Bomb&Bomb</h2>
+        <p><strong>Method:</strong> Tiles affected = (columns covered) × (rows covered). Compute the <strong>average columns covered</strong> (1D), same for rows. Then: <strong>Expected tiles = AvgCols × AvgRows</strong>.</p>
+        <p><strong>On a 9-wide board (7×7 blast):</strong></p>
         <ul style="margin: 0.5rem 0; padding-left: 1.25rem; color: var(--muted); font-size: 0.95rem;">
-          <li>Center (e.g. row 4, col 4): full 7×7 fits → <strong>49</strong> cells</li>
-          <li>Corner (e.g. 0,0): only 4×4 fits → <strong>16</strong> cells</li>
-          <li>Edge: a 7×4 or 5×7 rectangle, etc. → between 16 and 49</li>
+          <li>Center at 1 or 9 → 4 columns <span style="color: var(--text);">(2 positions)</span></li>
+          <li>Center at 2 or 8 → 5 columns <span style="color: var(--text);">(2 positions)</span></li>
+          <li>Center at 3 or 7 → 6 columns <span style="color: var(--text);">(2 positions)</span></li>
+          <li>Center at 4, 5, or 6 → 7 columns <span style="color: var(--text);">(3 positions)</span></li>
         </ul>
-        <p><strong>Step 2:</strong> Add those 81 numbers. The total is <strong>2,601</strong> (you can check: e.g. corners contribute 16×4, edges contribute various amounts, center 49, etc.).</p>
-        <p><strong>Step 3:</strong> Expected tiles cleared = total ÷ 81 = 2,601 ÷ 81 = <strong>32.11</strong>.</p>
+        <p><strong>AvgCols</strong> = (4×2 + 5×2 + 6×2 + 7×3) ÷ 9 = <strong>5.67</strong></p>
+        <p><strong>AvgRows</strong> = same = <strong>5.67</strong></p>
+        <p><strong>Expected tiles</strong> = 5.67 × 5.67 = <strong>32.11</strong></p>
         <p>So if the combo appears at a random tile each time, on average <strong>32.11 tiles</strong> are cleared per combo.</p>
       </div>
       <div class="footer">7×7 blast (center ±3 in each direction), clipped to the 9×9 board.</div>
@@ -681,6 +734,26 @@
   </div>
 
   <script>
+    (function initTheme() {
+      var theme = localStorage.getItem('peak-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      window.getChartColors = function(t) {
+        if (t === 'dark') return { gridColor: 'rgba(136,136,160,0.25)', fontColor: '#e8e8ec', fontMuted: '#8888a0', navy: '#7986cb', red: '#e57373', navyRgba: 'rgba(121,134,203,0.2)', redRgba: 'rgba(229,115,115,0.2)', day15: '#e57373', day15Rgba: 'rgba(229,115,115,0.7)' };
+        return { gridColor: 'rgba(26,35,126,0.15)', fontColor: '#1A237E', fontMuted: '#5c6b7a', navy: '#1A237E', red: '#B71C1C', navyRgba: 'rgba(26,35,126,0.12)', redRgba: 'rgba(183,28,28,0.12)', day15: '#B71C1C', day15Rgba: 'rgba(183,28,28,0.6)' };
+      };
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.textContent = theme === 'light' ? 'Dark' : 'Light';
+        btn.addEventListener('click', function() {
+          theme = theme === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          localStorage.setItem('peak-theme', theme);
+          btn.textContent = theme === 'light' ? 'Dark' : 'Light';
+          if (window.updateChartsTheme) window.updateChartsTheme(theme);
+        });
+      }
+    })();
+
     // -------- Q1: Gardenscapes diamond explosions --------
     (function() {
       const N = 9;
@@ -1053,9 +1126,9 @@
     document.getElementById('cohortTableA').innerHTML += buildCohortTable(R_A, 15);
     document.getElementById('cohortTableB').innerHTML += buildCohortTable(R_B, 15);
 
-    const gridColor = 'rgba(136, 136, 160, 0.2)';
-    const fontColor = '#e8e8ec';
-    const fontMuted = '#8888a0';
+    var themeForCharts = document.documentElement.getAttribute('data-theme') || 'light';
+    var chartColors = window.getChartColors(themeForCharts);
+    var gridColor = chartColors.gridColor, fontColor = chartColors.fontColor, fontMuted = chartColors.fontMuted;
 
     let chartRetention, chartDAU, chartRevenue, chartPartCArpdau, chartPartCRevenue, chartPartCCumulative;
 
@@ -1064,8 +1137,8 @@
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: retentionA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: retentionB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: retentionA, borderColor: chartColors.navy, backgroundColor: chartColors.navyRgba, fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: retentionB, borderColor: chartColors.red, backgroundColor: chartColors.redRgba, fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -1084,8 +1157,8 @@
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: dauA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: dauB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: dauA, borderColor: chartColors.navy, backgroundColor: chartColors.navyRgba, fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: dauB, borderColor: chartColors.red, backgroundColor: chartColors.redRgba, fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -1103,12 +1176,13 @@
       plugins: [{
         id: 'vline15',
         beforeDraw(chart) {
+          var c = window.getChartColors(document.documentElement.getAttribute('data-theme') || 'light');
           const ctx = chart.ctx;
           const xAxis = chart.scales.x;
           const x = xAxis.getPixelForValue(15);
           if (x < chart.chartArea.left || x > chart.chartArea.right) return;
           ctx.save();
-          ctx.strokeStyle = 'rgba(251, 191, 36, 0.7)';
+          ctx.strokeStyle = c.day15Rgba;
           ctx.lineWidth = 2;
           ctx.setLineDash([5, 5]);
           ctx.beginPath();
@@ -1116,7 +1190,7 @@
           ctx.lineTo(x, chart.chartArea.bottom);
           ctx.stroke();
           ctx.restore();
-          ctx.fillStyle = 'rgba(251, 191, 36, 0.7)';
+          ctx.fillStyle = c.day15;
           ctx.font = '11px DM Sans';
           ctx.fillText('day 15', x + 4, chart.chartArea.top + 12);
         }
@@ -1128,8 +1202,8 @@
       data: {
         labels: days,
         datasets: [
-          { label: 'Variant A', data: cumRevA, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.08)', fill: true, tension: 0.2, pointRadius: 0 },
-          { label: 'Variant B', data: cumRevB, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.08)', fill: true, tension: 0.2, pointRadius: 0 }
+          { label: 'Variant A', data: cumRevA, borderColor: chartColors.navy, backgroundColor: chartColors.navyRgba, fill: true, tension: 0.2, pointRadius: 0 },
+          { label: 'Variant B', data: cumRevB, borderColor: chartColors.red, backgroundColor: chartColors.redRgba, fill: true, tension: 0.2, pointRadius: 0 }
         ]
       },
       options: {
@@ -1147,12 +1221,13 @@
       plugins: [{
         id: 'vline15rev',
         beforeDraw(chart) {
+          var c = window.getChartColors(document.documentElement.getAttribute('data-theme') || 'light');
           const ctx = chart.ctx;
           const xAxis = chart.scales.x;
           const x = xAxis.getPixelForValue(15);
           if (x < chart.chartArea.left || x > chart.chartArea.right) return;
           ctx.save();
-          ctx.strokeStyle = 'rgba(251, 191, 36, 0.7)';
+          ctx.strokeStyle = c.day15Rgba;
           ctx.lineWidth = 2;
           ctx.setLineDash([5, 5]);
           ctx.beginPath();
@@ -1160,7 +1235,7 @@
           ctx.lineTo(x, chart.chartArea.bottom);
           ctx.stroke();
           ctx.restore();
-          ctx.fillStyle = 'rgba(251, 191, 36, 0.7)';
+          ctx.fillStyle = c.day15;
           ctx.font = '11px DM Sans';
           ctx.fillText('day 15', x + 4, chart.chartArea.top + 12);
         }
@@ -1181,8 +1256,8 @@
         datasets: [{
           label: 'ARPDAU ($)',
           data: arpdauC,
-          borderColor: '#fbbf24',
-          backgroundColor: 'rgba(251, 191, 36, 0.15)',
+          borderColor: chartColors.red,
+          backgroundColor: chartColors.redRgba,
           fill: true,
           tension: 0,
           pointRadius: 3,
@@ -1210,8 +1285,8 @@
       data: {
         labels: days15to25,
         datasets: [
-          { label: 'Variant A', data: dailyRevA_C, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 2 },
-          { label: 'Variant B', data: dailyRevB_C, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 2 }
+          { label: 'Variant A', data: dailyRevA_C, borderColor: chartColors.navy, backgroundColor: chartColors.navyRgba, fill: true, tension: 0.2, pointRadius: 2 },
+          { label: 'Variant B', data: dailyRevB_C, borderColor: chartColors.red, backgroundColor: chartColors.redRgba, fill: true, tension: 0.2, pointRadius: 2 }
         ]
       },
       options: {
@@ -1239,8 +1314,8 @@
       data: {
         labels: days15to25Cum,
         datasets: [
-          { label: 'Variant A', data: cumRevA_PartC_15_25, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2, pointRadius: 2 },
-          { label: 'Variant B', data: cumRevB_PartC_15_25, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2, pointRadius: 2 }
+          { label: 'Variant A', data: cumRevA_PartC_15_25, borderColor: chartColors.navy, backgroundColor: chartColors.navyRgba, fill: true, tension: 0.2, pointRadius: 2 },
+          { label: 'Variant B', data: cumRevB_PartC_15_25, borderColor: chartColors.red, backgroundColor: chartColors.redRgba, fill: true, tension: 0.2, pointRadius: 2 }
         ]
       },
       options: {
@@ -1256,6 +1331,40 @@
         }
       }
     });
+
+    window.updateChartsTheme = function(theme) {
+      var c = window.getChartColors(theme);
+      function updateChart(chart, hasDay15Plugin) {
+        if (!chart) return;
+        chart.options.plugins.legend.labels.color = c.fontColor;
+        chart.options.scales.x.grid.color = c.gridColor;
+        chart.options.scales.x.ticks.color = c.fontMuted;
+        chart.options.scales.y.grid.color = c.gridColor;
+        chart.options.scales.y.ticks.color = c.fontMuted;
+        if (chart.data && chart.data.datasets) {
+          chart.data.datasets.forEach(function(ds, i) {
+            ds.borderColor = i === 0 ? c.navy : c.red;
+            ds.backgroundColor = i === 0 ? c.navyRgba : c.redRgba;
+          });
+        }
+        chart.update();
+      }
+      updateChart(chartRetention);
+      updateChart(chartDAU);
+      updateChart(chartRevenue);
+      if (chartPartCArpdau) {
+        chartPartCArpdau.options.plugins.legend.labels.color = c.fontColor;
+        chartPartCArpdau.options.scales.x.grid.color = c.gridColor;
+        chartPartCArpdau.options.scales.x.ticks.color = c.fontMuted;
+        chartPartCArpdau.options.scales.y.grid.color = c.gridColor;
+        chartPartCArpdau.options.scales.y.ticks.color = c.fontMuted;
+        chartPartCArpdau.data.datasets[0].borderColor = c.red;
+        chartPartCArpdau.data.datasets[0].backgroundColor = c.redRgba;
+        chartPartCArpdau.update();
+      }
+      updateChart(chartPartCRevenue);
+      updateChart(chartPartCCumulative);
+    };
 
     function showPanel(tabId) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));

@@ -2,6 +2,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
+  const isLight = theme === 'light';
 
   return (
     <div className="fixed top-0 right-0 py-3 px-5 text-center z-[100] bg-gradient-to-l from-[var(--bg)] to-transparent">
@@ -14,33 +15,34 @@ export function Header() {
         Muhyiddin <span className="header-name-accent">Yesilbagli</span>
       </span>
       <span className="text-xs text-[var(--muted)] block mt-1.5">February 2026</span>
-      <div className="mt-2.5 flex items-center justify-center gap-1.5">
-        <button
-          type="button"
-          onClick={() => setTheme('light')}
-          className={
-            'font-sans text-xs font-medium py-1.5 px-2.5 rounded-md border transition-colors ' +
-            (theme === 'light'
-              ? 'border-[var(--accent-a)] bg-[var(--navy-light)] text-[var(--accent-a)]'
-              : 'border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--text)]')
-          }
-          aria-label="Light mode"
+      <div className="mt-2.5 flex items-center justify-center gap-2">
+        <span
+          className={`font-sans text-xs font-medium transition-colors ${isLight ? 'text-[var(--accent-a)]' : 'text-[var(--muted)]'}`}
         >
           Light
-        </button>
+        </span>
         <button
           type="button"
-          onClick={() => setTheme('dark')}
-          className={
-            'font-sans text-xs font-medium py-1.5 px-2.5 rounded-md border transition-colors ' +
-            (theme === 'dark'
-              ? 'border-[var(--accent-a)] bg-[var(--navy-light)] text-[var(--accent-a)]'
-              : 'border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--text)]')
-          }
-          aria-label="Dark mode"
+          onClick={() => setTheme(isLight ? 'dark' : 'light')}
+          className="theme-toggle-track relative w-12 h-6 rounded-full bg-[var(--navy-light)] border border-[var(--border)] cursor-pointer transition-colors hover:border-[var(--accent-a)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-a)] focus-visible:ring-offset-2"
+          aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+          aria-pressed={!isLight}
+        >
+          <span
+            className="theme-toggle-thumb absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 ease-out"
+            style={{ transform: isLight ? 'translateX(0)' : 'translateX(1.5rem)' }}
+          />
+          <span className="theme-toggle-dots absolute right-2 top-1/2 -translate-y-1/2 flex gap-0.5 opacity-50" aria-hidden>
+            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
+            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
+            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
+          </span>
+        </button>
+        <span
+          className={`font-sans text-xs font-medium transition-colors ${!isLight ? 'text-[var(--accent-a)]' : 'text-[var(--muted)]'}`}
         >
           Dark
-        </button>
+        </span>
       </div>
     </div>
   );

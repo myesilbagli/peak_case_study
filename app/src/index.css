@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  --bg: #E3E6EA;
+  --surface: #ffffff;
+  --surface-soft: #f5f6f8;
+  --border: #c5c9d1;
+  --text: #1A237E;
+  --text-body: #2d3748;
+  --muted: #5c6b7a;
+  --navy: #1A237E;
+  --navy-light: rgba(26, 35, 126, 0.12);
+  --red: #B71C1C;
+  --red-light: rgba(183, 28, 28, 0.12);
+  --accent-a: #1A237E;
+  --accent-b: #B71C1C;
+  --highlight: #B71C1C;
+}
+
+html.dark {
+  --bg: #0f0f12;
+  --surface: #1a1a20;
+  --surface-soft: #252530;
+  --border: #2a2a32;
+  --text: #e8e8ec;
+  --text-body: #e8e8ec;
+  --muted: #8888a0;
+  --navy: #7986cb;
+  --navy-light: rgba(26, 35, 126, 0.35);
+  --red: #e57373;
+  --red-light: rgba(183, 28, 28, 0.25);
+  --accent-a: #7986cb;
+  --accent-b: #e57373;
+  --highlight: #e57373;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header-name-accent {
+  border-bottom: 2px wavy var(--red);
+}
+
+/* Q2 explosion effect */
+@keyframes explosion-center {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.8); }
+  40% { transform: scale(1.35); box-shadow: 0 0 0 8px rgba(183, 28, 28, 0); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.5); }
+}
+
+@keyframes explosion-cell {
+  0% { transform: scale(1); opacity: 0.4; }
+  30% { transform: scale(1.25); opacity: 1; }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-explosion-center {
+  animation: explosion-center 0.45s ease-out forwards;
+}
+
+.animate-explosion-cell {
+  animation: explosion-cell 0.35s ease-out forwards;
+}
+
+/* Q1 explosion (same as Q2) */
+.animate-explosion-center-q1 {
+  animation: explosion-center 0.45s ease-out forwards;
+}
+
+.animate-explosion-cell-q1 {
+  animation: explosion-cell 0.35s ease-out forwards;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-body);
+  line-height: 1.5;
+}

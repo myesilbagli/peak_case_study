@@ -11,8 +11,7 @@ export function Header() {
         className="block max-h-9 w-auto mx-auto mb-3 object-contain"
       />
       <span className="font-semibold text-[var(--text)] text-sm block">
-        Muhyiddin <span className="header-name-accent">Yesilbagli</span>{' '}
-        <small className="font-normal text-[var(--muted)]">v.1</small>
+        Muhyiddin <span className="header-name-accent">Yesilbagli</span>
       </span>
       <span className="text-xs text-[var(--muted)] block mt-1.5">February 2026</span>
       <div className="mt-2.5">

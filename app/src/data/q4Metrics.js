@@ -108,19 +108,37 @@ export const cumRevB = days.map((d) => cumRevenue(d, R_B));
 
 export const dau15_A = dau(15, R_A);
 export const dau15_B = dau(15, R_B);
+export const dau15_diff = Math.abs(dau15_A - dau15_B);
+export const dau15_diffPct = (dau15_diff / Math.max(dau15_A, dau15_B)) * 100;
+
 export const rev15_A = cumRevenue(15, R_A);
 export const rev15_B = cumRevenue(15, R_B);
+export const rev15_diff = Math.abs(rev15_A - rev15_B);
+export const rev15_diffPct = (rev15_diff / Math.max(rev15_A, rev15_B)) * 100;
 
 export const partAPick = dau15_A >= dau15_B ? 'A' : 'B';
 export const partBPick = rev15_A >= rev15_B ? 'A' : 'B';
 
 export const rev25_A_c = cumRevenuePartC(25, R_A);
 export const rev25_B_c = cumRevenuePartC(25, R_B);
+export const rev25_diff = Math.abs(rev25_A_c - rev25_B_c);
+export const rev25_diffPct = (rev25_diff / Math.max(rev25_A_c, rev25_B_c)) * 100;
 export const partCPick = rev25_A_c >= rev25_B_c ? 'A' : 'B';
+
+// Difference arrays for charts
+export const dauDiff = days.slice(0, 15).map((d, i) => dauA[i] - dauB[i]);
+export const revDiff = days.slice(0, 15).map((d, i) => cumRevA[i] - cumRevB[i]);
+const days1to25 = days.slice(0, 25);
+export const revDiffPartC = days1to25.map((d) => cumRevenuePartC(d, R_A) - cumRevenuePartC(d, R_B));
 
 export const rev28_A_d = cumRevenuePartD(28, R_A, R_A_new);
 export const rev28_B_d = cumRevenuePartD(28, R_B, R_B_new);
 export const partDPick = rev28_A_d >= rev28_B_d ? 'A' : 'B';
+
+const daysNewSource = [];
+for (let i = 1; i <= 28; i++) daysNewSource.push(i);
+export const retentionNewA = daysNewSource.map((x) => Math.round(R_A_new(x) * 10000) / 100);
+export const retentionNewB = daysNewSource.map((x) => Math.round(R_B_new(x) * 10000) / 100);
 
 const days15to25 = [];
 for (let i = 15; i <= 25; i++) days15to25.push(i);

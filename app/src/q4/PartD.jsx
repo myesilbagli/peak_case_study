@@ -1,9 +1,25 @@
 import { Card } from '../components/Card';
+import { NewSourceRetentionChart } from './charts/NewSourceRetentionChart';
 import { rev28_A_d, rev28_B_d, partDPick } from '../data/q4Metrics';
 
 export function PartD() {
   return (
     <Card title="Part D – New install source from day 15 (3k new + 7k old)">
+      <div className="bg-[var(--surface-soft)] rounded-lg p-4 my-4 border-l-4 border-[var(--accent-a)]">
+        <h3 className="text-sm font-semibold text-[var(--text)] mb-2">New source retention formulas</h3>
+        <p className="text-sm text-[var(--muted)] mb-2">
+          From the case, retention of the <strong className="text-[var(--text-body)]">new</strong> source (as a decimal) by days since install x:
+        </p>
+        <ul className="list-none font-mono text-sm text-[var(--text-body)] space-y-1 mb-2">
+          <li><strong>Variant A (new source):</strong> y = (−2.1·ln(x) + 48) / 100</li>
+          <li><strong>Variant B (new source):</strong> y = (−5.1·ln(x) + 53) / 100</li>
+        </ul>
+        <p className="text-xs text-[var(--muted)]">x = day (age), y = retention. Chart below plots these for days 1–28.</p>
+      </div>
+      <div className="my-4">
+        <p className="text-[var(--muted)] text-sm mb-2">New source retention (%) — Variant A vs B</p>
+        <NewSourceRetentionChart />
+      </div>
       <div className="bg-[var(--surface-soft)] rounded-lg p-4 my-4 border-l-4 border-[var(--accent-a)]">
         <h3 className="text-sm font-semibold text-[var(--text)] mb-2">What's different here?</h3>
         <p className="text-sm text-[var(--muted)] leading-relaxed mb-2">

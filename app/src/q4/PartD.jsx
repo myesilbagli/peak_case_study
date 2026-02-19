@@ -1,5 +1,8 @@
 import { Card } from '../components/Card';
 import { NewSourceRetentionChart } from './charts/NewSourceRetentionChart';
+import { PartDDAUChart } from './charts/PartDDAUChart';
+import { PartDRevenueChart } from './charts/PartDRevenueChart';
+import { PartDDiffChart } from './charts/PartDDiffChart';
 import { rev28_A_d, rev28_B_d, partDPick } from '../data/q4Metrics';
 
 export function PartD() {
@@ -19,6 +22,23 @@ export function PartD() {
       <div className="my-4">
         <p className="text-[var(--muted)] text-sm mb-2">New source retention (%) — Variant A vs B</p>
         <NewSourceRetentionChart />
+      </div>
+      <div className="my-6">
+        <p className="text-[var(--muted)] text-sm font-semibold mb-3">Charts from your spreadsheet (Part D)</p>
+        <div className="grid grid-cols-1 gap-6">
+          <div>
+            <p className="text-xs text-[var(--muted)] mb-1">DAU by day (7k old + 3k new from day 15)</p>
+            <PartDDAUChart />
+          </div>
+          <div>
+            <p className="text-xs text-[var(--muted)] mb-1">Cumulative revenue by day</p>
+            <PartDRevenueChart />
+          </div>
+          <div>
+            <p className="text-xs text-[var(--muted)] mb-1">Cumulative revenue difference (A - B)</p>
+            <PartDDiffChart />
+          </div>
+        </div>
       </div>
       <div className="bg-[var(--surface-soft)] rounded-lg p-4 my-4 border-l-4 border-[var(--accent-a)]">
         <h3 className="text-sm font-semibold text-[var(--text)] mb-2">What's different here?</h3>

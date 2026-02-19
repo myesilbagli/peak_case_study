@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Q4Tabs } from '../q4/Q4Tabs';
-import { GeneralAnalysis } from '../q4/GeneralAnalysis';
 import { PartA } from '../q4/PartA';
 import { PartB } from '../q4/PartB';
 import { PartC } from '../q4/PartC';
 import { PartD } from '../q4/PartD';
 
 export function Q4Panel() {
-  const [activeTab, setActiveTab] = useState('general');
+  const [activeTab, setActiveTab] = useState('part-a');
 
   return (
     <div className="max-w-[900px] mx-auto px-6 py-8">
@@ -20,7 +19,6 @@ export function Q4Panel() {
 
       <Q4Tabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {activeTab === 'general' && <GeneralAnalysis />}
       {activeTab === 'part-a' && <PartA />}
       {activeTab === 'part-b' && <PartB />}
       {activeTab === 'part-c' && <PartC />}

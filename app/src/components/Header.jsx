@@ -32,11 +32,6 @@ export function Header() {
             className="theme-toggle-thumb absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 ease-out"
             style={{ transform: isLight ? 'translateX(0)' : 'translateX(1.5rem)' }}
           />
-          <span className="theme-toggle-dots absolute right-2 top-1/2 -translate-y-1/2 flex gap-0.5 opacity-50" aria-hidden>
-            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
-            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
-            <span className="w-1 h-1 rounded-full bg-[var(--muted)]" />
-          </span>
         </button>
         <span
           className={`font-sans text-xs font-medium transition-colors ${!isLight ? 'text-[var(--accent-a)]' : 'text-[var(--muted)]'}`}

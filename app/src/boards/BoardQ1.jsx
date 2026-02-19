@@ -1,10 +1,10 @@
-import { getSquareMinusCornersSet, countSquareMinusCorners, BOARD_SIZE } from './boardUtils';
+import { getQ1AffectedSet, countQ1Affected, BOARD_SIZE } from './boardUtils';
 
 export function BoardQ1({ selectedPower, selectedR, selectedC, explosionKey, onCellClick }) {
   const radius = selectedPower ? parseInt(selectedPower.dataset?.radius ?? 0, 10) : 0;
   const hasCenter = selectedR != null && selectedC != null && selectedPower;
-  const affected = hasCenter ? getSquareMinusCornersSet(selectedR, selectedC, radius) : new Set();
-  const count = hasCenter ? countSquareMinusCorners(selectedR, selectedC, radius) : 0;
+  const affected = hasCenter ? getQ1AffectedSet(selectedR, selectedC, radius) : new Set();
+  const count = hasCenter ? countQ1Affected(selectedR, selectedC, radius) : 0;
 
   const cells = [];
   for (let i = 0; i < BOARD_SIZE; i++) {

@@ -1,5 +1,4 @@
 const TABS = [
-  { id: 'general', label: 'General Analysis' },
   { id: 'part-a', label: 'Part A' },
   { id: 'part-b', label: 'Part B' },
   { id: 'part-c', label: 'Part C' },

@@ -4,12 +4,12 @@ export function getChartColors(theme) {
       gridColor: 'rgba(136,136,160,0.25)',
       fontColor: '#e8e8ec',
       fontMuted: '#8888a0',
-      navy: '#7986cb',
-      red: '#e57373',
-      navyRgba: 'rgba(121,134,203,0.2)',
-      redRgba: 'rgba(229,115,115,0.2)',
-      day15: '#e57373',
-      day15Rgba: 'rgba(229,115,115,0.7)',
+      navy: '#5c6bc0',
+      red: '#ff5252',
+      navyRgba: 'rgba(92,107,192,0.25)',
+      redRgba: 'rgba(255,82,82,0.2)',
+      day15: '#ff5252',
+      day15Rgba: 'rgba(255,82,82,0.7)',
     };
   }
   return {

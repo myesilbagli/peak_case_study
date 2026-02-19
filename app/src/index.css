@@ -30,13 +30,13 @@ html.dark {
   --text: #e8e8ec;
   --text-body: #e8e8ec;
   --muted: #8888a0;
-  --navy: #7986cb;
-  --navy-light: rgba(26, 35, 126, 0.35);
-  --red: #e57373;
-  --red-light: rgba(183, 28, 28, 0.25);
-  --accent-a: #7986cb;
-  --accent-b: #e57373;
-  --highlight: #e57373;
+  --navy: #5c6bc0;
+  --navy-light: rgba(92, 107, 192, 0.4);
+  --red: #ff5252;
+  --red-light: rgba(255, 82, 82, 0.3);
+  --accent-a: #5c6bc0;
+  --accent-b: #ff5252;
+  --highlight: #ff5252;
 }
 
 * {

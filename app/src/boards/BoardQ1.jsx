@@ -24,9 +24,9 @@ export function BoardQ1({ selectedPower, selectedR, selectedC, explosionKey, onC
           className={
             'w-9 h-9 flex items-center justify-center rounded-md text-[0.7rem] font-mono cursor-pointer select-none transition-colors ' +
             (isCombo
-              ? 'bg-[var(--navy)] text-white font-bold shadow-[0_0_0_2px_rgba(26,35,126,0.5)] dark:shadow-[0_0_0_2px_rgba(121,134,203,0.6)]'
+              ? 'bg-[var(--navy)] text-white font-bold shadow-[0_0_0_2px_rgba(26,35,126,0.5)] dark:shadow-[0_0_0_3px_rgba(92,107,192,0.85)]'
               : isAffected
-                ? 'bg-[var(--red)] text-white/95 hover:bg-[#8B0000] dark:hover:bg-[#ef5350]'
+                ? 'bg-[var(--red)] text-white/95 hover:bg-[#8B0000] dark:hover:bg-[#ff6e6e]'
                 : 'bg-[var(--border)] text-[var(--muted)] hover:bg-[#b8bcc4] hover:text-[var(--text-body)] dark:hover:bg-[#3a3a45] dark:hover:text-[var(--text)]') +
             (explosionKey != null && isCombo ? ' animate-explosion-center-q1' : '') +
             (explosionKey != null && isAffected && !isCombo ? ' animate-explosion-cell-q1' : '')

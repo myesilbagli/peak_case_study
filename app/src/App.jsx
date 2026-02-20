@@ -7,7 +7,7 @@ import { Q2Panel } from './pages/Q2Panel';
 import { Q4Panel } from './pages/Q4Panel';
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState('q2');
+  const [activeTab, setActiveTab] = useState('q1');
 
   return (
     <>

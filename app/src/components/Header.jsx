@@ -39,6 +39,14 @@ export function Header() {
           Dark
         </span>
       </div>
+      <a
+        href="https://github.com/myesilbagli/peak_case_study"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 block text-xs font-medium text-[var(--accent-a)] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-a)] focus-visible:ring-offset-2 rounded"
+      >
+        GitHub
+      </a>
     </div>
   );
 }
